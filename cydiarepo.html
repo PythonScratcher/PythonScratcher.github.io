@@ -1,0 +1,52 @@
+<title>PythonScratcher's Repo</title>
+<script>
+  //The following annoys the user with some stupid cookie warning.
+function getCookie(cname) {
+    var name = cname + '=';
+    var ca = document.cookie.split(';');
+    for(var i=0; i<ca.length; i++) {
+        var c = ca[i];
+        while (c.charAt(0)==' ') c = c.substring(1);
+        if (c.indexOf(name) == 0) return c.substring(name.length,c.length);
+    }
+    return '';
+}
+
+function setCookie(cname, cvalue, date) {
+  if (getCookie('agreed') != 'Yes') return;
+    document.cookie = cname + '=' + cvalue + '; ' + expires + 'expires=' + date.toUTCString() + ';';
+}
+
+if (getCookie('agreed') == '') {
+  var r = confirm('In easy words: EU/UK law enforces me to show this alert: This site uses cookies. Click "OK" to continue, "Cancel" to stop. Disable cookies if you do not like them.\n\n\n\
+In complicated words: This site stores information on your terminal equipment in order to provide the given service. Other websites embedded in this website might store information as well.\n\
+Click "OK" to allow information to be stored. Click "Cancel" to stop *this* website from storing information. \
+A cookie to save your choice will be stored either way, as this is information which is strictly necessary in order to provide service which is explicitly requested to store by you.');
+  console.log(r)
+  if (r == true) {
+    var d = new Date();
+    d.setTime(d.getTime() + 31536000000);
+    document.cookie = 'agreed=Yes; expires=' + d.toUTCString() + ';';
+  } else {
+    var d = new Date();
+    d.setTime(d.getTime() + 31536000000);
+    document.cookie = 'agreed=No; expires=' + d.toUTCString() + ';';
+  }
+}
+
+</script>
+
+<h1>PythonScratcher's Repo</h1>
+<marquee width="100%" direction="left">
+Hey! That Shouldn't Be Free!
+</marquee>
+
+
+<div>
+  <h5>iOS 4 - iOS 15</h5>
+</div>
+
+<a href="cydia://url/https://cydia.saurik.com/api/share#?source=http://pythonscratcher.github.io/repo/">Add To Cydia</a>
+<p4>Plain URL http://pythonscratcher.github.io/repo/  </p4>
+
+<a href="http://pythonscratcher.github.io/cydiadshack.html">DisplayRecorder Crack How-To </a>
