@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<!-- saved from url=(0040)https://snap.berkeley.edu/snap/snap.html -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta name="snap-cloud-domain" location="https://snap.berkeley.edu:443">
+        <title>Snap! 8.0.0</title>
+        <link rel="icon" href="https://snap.berkeley.edu/snap/src/favicon.ico" type="image/x-icon">
+        <link rel="manifest" href="https://snap.berkeley.edu/snap/manifest.json">
+        <link rel="apple-touch-icon" href="https://snap.berkeley.edu/snap/img/snap-icon-152.png">
+        
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="white">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="black">
+        <meta name="apple-mobile-web-app-title" content="Snap!">
+        <meta name="msapplication-TileImage" content="img/snap-icon-144.png">
+        <meta name="msapplication-TileColor" content="#FFFFFF">
+        <script src="./Snap! 8.0.0_files/morphic.js"></script>
+        <script src="./Snap! 8.0.0_files/symbols.js"></script>
+        <script src="./Snap! 8.0.0_files/widgets.js"></script>
+        <script src="./Snap! 8.0.0_files/blocks.js"></script>
+        <script src="./Snap! 8.0.0_files/threads.js"></script>
+        <script src="./Snap! 8.0.0_files/objects.js"></script>
+        <script src="./Snap! 8.0.0_files/scenes.js"></script>
+        <script src="./Snap! 8.0.0_files/gui.js"></script>
+        <script src="./Snap! 8.0.0_files/paint.js"></script>
+        <script src="./Snap! 8.0.0_files/lists.js"></script>
+        <script src="./Snap! 8.0.0_files/byob.js"></script>
+        <script src="./Snap! 8.0.0_files/tables.js"></script>
+        <script src="./Snap! 8.0.0_files/sketch.js"></script>
+        <script src="./Snap! 8.0.0_files/video.js"></script>
+        <script src="./Snap! 8.0.0_files/maps.js"></script>
+        <script src="./Snap! 8.0.0_files/extensions.js"></script>
+        <script src="./Snap! 8.0.0_files/xml.js"></script>
+        <script src="./Snap! 8.0.0_files/store.js"></script>
+        <script src="./Snap! 8.0.0_files/locale.js"></script>
+        <script src="./Snap! 8.0.0_files/cloud.js"></script>
+        <script src="./Snap! 8.0.0_files/api.js"></script>
+        <script src="./Snap! 8.0.0_files/sha512.js"></script>
+        <script src="./Snap! 8.0.0_files/FileSaver.min.js"></script>
+        <script>
+            var world,
+                FPS = 67,
+                lastTime = 0;
+            window.onload = function () {
+                if ('serviceWorker' in navigator) {
+                    navigator.serviceWorker.register('sw.js');
+                }
+                world = new WorldMorph(document.getElementById('world'));
+                new IDE_Morph().openIn(world);
+                loop();
+			};
+            function loop(timestamp) {
+                requestAnimationFrame(loop);
+                if (timestamp - lastTime < 1000 / FPS) {
+                    return;
+                }
+                world.doOneCycle();
+                lastTime = timestamp;
+            }
+        </script>
+    <style type="text/css"></style></head>
+    <body style="margin: 0;" data-new-gr-c-s-check-loaded="14.1094.0" data-gr-ext-installed="" data-new-gr-c-s-loaded="14.1094.0">
+        <canvas id="world" tabindex="1" style="position: absolute; left: 0px; right: 0px; width: 100%; height: 100%;" width="1366" height="577"></canvas>
+    
+
+<textarea id="morphic_keyboard" style="caret-color: transparent; position: absolute; overflow: hidden; border: none; resize: none; z-index: -1; top: 0px; left: 0px;" wrap="off" autofocus=""></textarea></body><grammarly-desktop-integration data-grammarly-shadow-root="true"></grammarly-desktop-integration></html>
