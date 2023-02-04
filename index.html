@@ -1,50 +1,44 @@
-<title>PythonScratcher's GitHub</title>
-<script>
-  //The following annoys the user with some stupid cookie warning (required).
-function getCookie(cname) {
-    var name = cname + '=';
-    var ca = document.cookie.split(';');
-    for(var i=0; i<ca.length; i++) {
-        var c = ca[i];
-        while (c.charAt(0)==' ') c = c.substring(1);
-        if (c.indexOf(name) == 0) return c.substring(name.length,c.length);
-    }
-    return '';
-}
 
-function setCookie(cname, cvalue, date) {
-  if (getCookie('agreed') != 'Yes') return;
-    document.cookie = cname + '=' + cvalue + '; ' + expires + 'expires=' + date.toUTCString() + ';';
-}
-
-if (getCookie('agreed') == '') {
-  var r = confirm('In easy words: EU/UK law enforces me to show this alert: This site uses cookies. Click "OK" to continue, "Cancel" to stop. Disable cookies if you do not like them.\n\n\n\
-In complicated words: This site stores information on your terminal equipment in order to provide the given service. Other websites embedded in this website might store information as well.\n\
-Click "OK" to allow information to be stored. Click "Cancel" to stop *this* website from storing information. \
-A cookie to save your choice will be stored either way, as this is information which is strictly necessary in order to provide service which is explicitly requested to store by you.');
-  console.log(r)
-  if (r == true) {
-    var d = new Date();
-    d.setTime(d.getTime() + 31536000000);
-    document.cookie = 'agreed=Yes; expires=' + d.toUTCString() + ';';
-  } else {
-    var d = new Date();
-    d.setTime(d.getTime() + 31536000000);
-    document.cookie = 'agreed=No; expires=' + d.toUTCString() + ';';
-  }
-}
-
-</script>
-
-<h1>PythonScratcher's Github</h1>
-<a href="http://pythonscratcher.ml">PythonScratcher</a>
-<marquee width="100%" direction="left">
-Where Is The CSS?
-</marquee>
+<head>
+    <body>
+  <title>PythonScratcher's Website</title>
 
 
 
-<h3>Projects</h3>
-<a href="http://pythonscratcher.github.io/cydiarepo.html">Cydia Repo</a>
-<a href="http://pythonscratcher.github.io/mcpe061ipa/index.html">MCPE 0.6.1 IPA</a>
+<!DOCTYPE html>
 
+
+
+  
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+ 
+  <link rel="stylesheet" href="style.css">
+
+    <style>
+      background: url(home.webp);
+    </style>
+
+  <script src="https://apis.google.com/js/platform.js"></script>
+  <script src="https://kit.fontawesome.com/6fd5b12557.js" crossorigin="anonymous"></script>
+
+</head>
+
+
+  <h1>PythonScratcher's Website</h1>
+  <!-- hitwebcounter Code START -->
+<a href="https://www.hitwebcounter.com" target="_blank">
+<img src="https://hitwebcounter.com/counter/counter.php?page=8130481&style=0007&nbdigits=5&type=page&initCount=199" title="Free Counter" Alt="web counter"   border="0" /></a>             
+  <br>
+
+  <div id="buttons"><button class="neutral"><a href="http://www.pythonscratcher.ml/files">Files</a></button><button class="neutral"><a href="http://www.pythonscratcher.ml/games">Web Games</a></button><button class="neutral"><a href="http://www.pythonscratcher.ml/hb">Homebrew</a></button><button class="donate"><a href="http://www.pythonscratcher.ml/donate">Donate</a></button></div>
+  
+  <p1>Website Undergoing Maintenance </p1>
+  
+  
+</body>
+                       
+                                    
+
+</html>

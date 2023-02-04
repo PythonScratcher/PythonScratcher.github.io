@@ -1,0 +1,83 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
+html, body {
+  height: 100%;
+  width: 100%;
+  background: url(home.webp);
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+* {
+  font-family: 'Poppins';
+}
+header {
+  color: #fff;
+  padding: 5px;
+  font-size: 46px;
+  margin: 5px;
+  text-align: center;
+  border-radius: 25px;
+  background: #2b2b2b;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+#buttons {
+  top: 60%;
+  transform: translate(0%, -60%);
+  text-align: center;
+  position: relative;
+}
+#buttons .neutral {
+  color: #fff;
+  background: #2b2b2b;
+}
+#buttons button {
+  border: none;
+  outline: none;
+  padding: 25px;
+  border-radius: 25px;
+}
+.fa-youtube {
+  color: red;
+  padding-right: 80px;
+}
+.fa-github-square {
+  color: #2b2b2b;
+  padding-left: 80px;
+}
+.fa-brands {
+  top: 85%;
+  left: 50%;
+  transform: translate(-50%, -85%);
+  position: absolute;
+  font-size: 36px;
+}
+button a {
+  text-decoration: none;
+  color: inherit;
+}
+.social {
+  color: #fff;
+  padding: 10px;
+  margin: 5px;
+  text-align: center;
+  border-radius: 25px;
+  background: #2b2b2b;
+  position: absolute;
+  top: 80%;
+  left: 50%;
+  transform: translate(-50%, -80%);
+}
+.donate {
+  color: #fff;
+  background: linear-gradient(to right, rgb(255, 150, 0), #00f);
+}
+#buttons button:hover {
+  color: #2b2b2b;
+  background: none;
+  border: #2b2b2b solid 1px;
+  transition: 0.25s;
+}
