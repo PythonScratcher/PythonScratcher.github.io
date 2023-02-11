@@ -20,17 +20,17 @@
 <button id="save-button">Save</button>
 <input type="file" id="load-input">
 <script>
-  // get the drawing area and color picker elements
+  // get the drawing area and colour picker elements
   const drawingArea = document.querySelector("#drawing-area");
   const colorInput = document.querySelector("#color-input");
 
-  // create a canvas element for the drawing area
+  // make the canvas elemnt for the drawing area
   const canvas = document.createElement("canvas");
   canvas.width = 900;
   canvas.height = 400;
   drawingArea.appendChild(canvas);
 
-  // get the 2D drawing context from the canvas
+  // get the 2D drawing stuff from the canvas
   const context = canvas.getContext("2d");
 
   context.fillStyle = "white";
@@ -62,7 +62,7 @@
     isDrawing = false;
   });
 
-  // handle save button click
+  // save button stuffs
   const saveButton = document.querySelector("#save-button");
   saveButton.addEventListener("click", () => {
     const dataURL = canvas.toDataURL("image/jpeg");
@@ -72,7 +72,7 @@
     link.click();
   });
 
-  // handle load input change
+  // image moment
   const loadInput = document.querySelector("#load-input");
   loadInput.addEventListener("change", event => {
     const file = event.target.files[0];
