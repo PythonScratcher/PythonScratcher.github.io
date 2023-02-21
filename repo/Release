@@ -1,8 +1,0 @@
-Origin: PythonScratcher's Repo
-Label: PythonScratcher's Repo
-Suite: stable
-Version: 1.0
-Codename: pythonrepo
-Architectures: iphoneos-arm
-Components: main
-Description: PythonScratcher's Cydia Repository
