@@ -3,7 +3,7 @@
   <title>PythonScratcher's Website</title>
   <meta property="og:site_name" content="PythonScratcher" />
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="author" content="PythonScratcher">
   <meta name="description" content="PythonScratcher's Epic Website!!1">
   <meta name="keywords" content="PythonScratcher, pythonscratcher, pysc, pythonscratcher.net, pythonscratcher.eu.org, pythonscratcher.ml, p, 676, pythons site, python's site, pythonscratcher's site, pythonscratchers site, pythonscratchers website, pythons website">
@@ -11,7 +11,11 @@
   <link rel="stylesheet" href="style.css">
 
   <style>
-    background: url(https://raw.githubusercontent.com/PythonScratcher/PythonScratcher.github.io/main/home.webp?token=GHSAT0AAAAAAB44O3Q6A3BXGYOFKLV3ZAL2Y67RDTA);
+    body {
+      background-image: url(https://raw.githubusercontent.com/PythonScratcher/PythonScratcher.github.io/main/home.webp?token=GHSAT0AAAAAAB44O3Q6A3BXGYOFKLV3ZAL2Y67RDTA);
+      background-position: center;
+      background-size: cover;
+    }
   </style>
 
   <script src="https://apis.google.com/js/platform.js"></script>
@@ -26,14 +30,7 @@
 </head>
 
 <body>
-  <h1>PythonScratcher's Website</h1>
-
-  <!-- hitwebcounter Code START -->
-  <a href="https://www.hitwebcounter.com" target="_blank">
-    <img src="https://hitwebcounter.com/counter/counter.php?page=8130481&style=0007&nbdigits=5&type=page&initCount=199" title="Free Counter" Alt="web counter"   border="0" />
-  </a>
-
-  <br>
+  <h1 style="text-align: center;">PythonScratcher's Website</h1>
 
   <div id="buttons">
     <button class="neutral"><a href="/files">Files</a></button>
@@ -41,4 +38,15 @@
     <button class="neutral"><a href="/hb">Homebrew</a></button>
     <button class="donate"><a href="/donate">Donate</a></button>
   </div>
+
+  <script>
+    function toggleMenu() {
+      var x = document.getElementById("buttons");
+      if (x.style.display === "block") {
+        x.style.display = "none";
+      } else {
+        x.style.display = "block";
+      }
+    }
+  </script>
 </body>
