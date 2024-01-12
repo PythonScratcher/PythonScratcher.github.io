@@ -1,3 +1,48 @@
-<?php
-echo "hi";
-?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/98.css">
+  <title>PythonScratcher</title>
+
+  <style>
+    body {
+      display: flex;
+      justify-content: center;
+      background-color: #008080;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    .window {
+      max-width: 600px; /* Adjust as needed */
+      width: 100%;
+    }
+  </style>
+</head>
+<body>
+
+<!-- Window for PythonScratcher -->
+<div class="window">
+  <div class="title-bar">
+    <div class="title-bar-text">PythonScratcher</div>
+  </div>
+  
+  <!-- Window content -->
+  <div class="window-body">
+    <p>Hi im PythonScratcher!</p>
+    <p>random stuff:</p>
+    
+    <!-- Buttons -->
+    <div class="flex-container">
+      <a href="/files" class="button"><button>Files</button></a>
+      <a href="/donate" class="button"><button>Donate</button></a>
+      <a href="/games" class="button"><button>Games</button></a>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
