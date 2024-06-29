@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PythonScratcher's Site</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+        }
+
+        .sidebar {
+            width: 250px;
+            background-color: blue;
+            color: white;
+            padding: 15px 15px 15px; 
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 100%;
+            box-sizing: border-box;
+        }
+
+        .content {
+            margin-left: 250px; /* Sidebar width */
+            padding: 20px;
+            flex-grow: 1;
+            box-sizing: border-box;
+        }
+    </style>
+</head>
+<body>
+    <div class="sidebar">
+
+        <ul>
+            <li><a href="/" style="color: white;">Home</a></li>
+            <li><a href="/files.html" style="color: white;">Files</a></li>
+          <li><a href="/games" style="color: white;">Games</a></li>
+          <li><b><a href="/projects.html" style="color: white;">Projects</a></b></li>
+        </ul>
+    </div>
+    <div class="content">
+        <h1>Projects</h1>
+
+      <ul>
+           <li><a href="//img.psr.tf">Image Host</a> - a free image host coded in PHP</li>
+           <li><a href="//mcpi.cc">MCPI.CC</a> - a free url shortener</li>
+           <li><a href="//img.psr.tf">psr.tf</a> - my lightweight site and a free image shortner</li>
+           <li><a href="http://chat.pythonscratcher.net">Chat</a> - an online chat in PHP</li>
+           <li><a href="//ip.psr.tf">IP Getter</a> - a way to get the clients IP via curl, GET, POST etc. Writen in PHP</li>
+           <li><a href="//whois.psr.tf">WHOIS Client</a> - PHP Whois client to lookup domains
+           </li>
+           <li><a href="//shrekbucks.pl">ShrekBucks</a> - a centralised cryptocurency</li>
+          <li><a href="https://github.com/SigmaNetWeb">Sigmanet</a> - Altenitive to the HTTP protocol and domains</li>
+          <li><a href="http://openntp.org.uk">OpenNTP</a> - Worlds fastest NTP client</li>
+          <li><a href="https://verify.pythonscratcher.net/">Email Verify</a> - Verification code sender writen in PHP with PHPMailer</li>
+      </ul>
+
+
+    </div>
+</body>
+</html>
