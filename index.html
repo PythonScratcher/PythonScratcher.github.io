@@ -46,7 +46,8 @@
         <h1>PythonScratcher's Site</h1>
       <p id="ipAddress">Hello!</p>
       <p>I'm PythonScratcher, A web developer in PHP, HTML, CSS and JavaScript! I like doing projects in Node.JS, Python and PHP</p>
-
+<br>
+        <a href="https://gitea.pythonscratcher.net"><img src="/badges/gitea.gif" alt=""></a><a href="https://mail.fzorb.xyz"><img src="https://fzorb.xyz/badges/zorbmail.gif" alt=""></a>
       <script>
         fetch('https://ipv4.icanhazip.com')
           .then(response => response.text()) // Assuming the response is plain text
@@ -56,7 +57,7 @@
           })
           .catch(error => {
             console.error('Error fetching IP:', error);
-            document.getElementById('ipAddress').textContent = 'Error fetching IP';
+            document.getElementById('ipAddress').textContent = '';
           });
       </script>
     </div>
