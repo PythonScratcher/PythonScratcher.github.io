@@ -1,69 +1,167 @@
 <!DOCTYPE html>
-<html lang="nl">
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Site van PythonScratcher</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            display: flex;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PythonScratcher's Site</title>
 
-        .sidebar {
-            width: 250px;
-            background-color: blue;
-            color: white;
-            padding: 15px 15px 15px; 
-            position: fixed;
-            top: 0;
-            left: 0;
-            height: 100%;
-            box-sizing: border-box;
-        }
+<style>
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    background: #ffffff;
+}
 
-        .content {
-            margin-left: 250px; /* Sidebar breedte */
-            padding: 20px;
-            flex-grow: 1;
-            box-sizing: border-box;
-        }
-    </style>
+/* ===== HEADER ===== */
+header {
+    background: blue;
+    color: white;
+    padding: 10px;
+}
+
+header b {
+    font-size: 18px;
+}
+
+/* ===== NAV ===== */
+nav {
+    background: #0033cc;
+}
+
+nav ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+nav li {
+    padding: 10px;
+}
+
+nav a {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+/* ===== CONTENT ===== */
+.content {
+    padding: 15px;
+    max-width: 900px;
+}
+
+/* ===== BADGES ===== */
+.badges img {
+    height: 31px;
+    margin: 2px;
+}
+
+/* ===== FLAGCOUNTER ===== */
+.flagcounter {
+    max-width: 100%;
+    overflow-x: auto;
+}
+
+.flagcounter img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+}
+
+/* ===== MOBILE ===== */
+@media (max-width: 700px) {
+    nav ul {
+        flex-direction: column;
+    }
+
+    nav li {
+        border-top: 1px solid rgba(255,255,255,0.3);
+    }
+
+    .content {
+        padding: 12px;
+    }
+}
+</style>
 </head>
+
 <body>
-    <div class="sidebar">
-        <ul>
-            <li><b><a href="/" style="color: white;">Home</a></b></li>
-            <li><a href="/files.html" style="color: white;">Bestanden</a></li>
-            <li><a href="/games" style="color: white;">Spellen</a></li>
-            <li><a href="/projects.html" style="color: white;">Projecten</a></li>
-        </ul>
-    </div>
-    <div class="content">
-        <h1>Site van PythonScratcher</h1>
-        <p id="ipAddress">Hallo!</p>
-        <p>Ik ben PythonScratcher, een webontwikkelaar in PHP, HTML, CSS en JavaScript! Ik maak graag projecten in Node.JS, Python en PHP.</p>
-        <p>Deze website is ook beschikbaar via Tor – <a href="http://python6mr5l2lzzanqdwlt2uuafnx445z6wl4td63xis3vwgyxlmtvad.onion">hier</a>!</p>
 
-        <br>
-        <a href="//psr.tf"><img src="/psr.gif" alt=""></a><a href="https://mail.fzorb.xyz"><img src="https://i.ibb.co/4wNs0pFs/image.png" alt=""></a><img src="https://i.ibb.co/qsnbW9w/Nestscape-Now2-0-Enhanced-Badge.gif" alt=""><a href="https://ipfs.tech"><img src="https://yesterhost.neocities.org/archive/buttons/button312.gif" alt=""></a><a href="//ubuntu.com"><img src="https://yesterhost.neocities.org/archive/buttons/button316.png" alt=""></a><a href="https://www.mozilla.org/firefox/"><img src="https://yesterhost.neocities.org/archive/buttons/button102.gif" alt=""></a><img src="https://seirdy.one/p/b/ipv6.2718186276.png" alt=""><a href="//torproject.org"><img src="https://seirdy.one/p/b/tor.3870205793.png" alt=""></a><a href="//archive.org"><img src="https://seirdy.one/p/b/internetarchive.2540748731.png" alt=""></a><a href="https://aim.k.vu"><img src="https://i.ibb.co/N9TnLjh/aimlink.gif" alt=""></a><a href="//microsoft.com"><img src="https://anlucas.neocities.org/ms.gif" alt=""></a><a href="//neocities.org"><img src="https://i.ibb.co/QnVLzV1/neocities-now.gif" alt=""></a><a href="//map.org.uk"><img src="https://i.ibb.co/zxz7KpK/bufreepalestine.gif" alt=""></a>
-        <br><a href="https://info.flagcounter.com/wVSr"><img src="https://s01.flagcounter.com/map/wVSr/size_s/txt_000000/border_CCCCCC/pageviews_0/viewers_0/flags_0/" alt="Flag Counter" border="0"></a>
-        <p>E-mail: <a href="mailto:me@psr.tf">me@psr.tf</a> en wacht 3 - 60 werkdagen</p>
+<header>
+    <b>PythonScratcher's Site</b>
+</header>
 
-        <script>
-            fetch('https://ipv4.icanhazip.com')
-              .then(response => response.text())
-              .then(data => {
-                var IP = data.trim();
-                document.getElementById('ipAddress').textContent = "Hallo, " + IP + "!";
-              })
-              .catch(error => {
-                console.error('Error fetching IP:', error);
-                document.getElementById('ipAddress').textContent = '';
-              });
-        </script>
+<nav>
+    <ul>
+        <li><a href="/">Home</a></li>
+        <li><a href="/files.html">Files</a></li>
+        <li><a href="/games">Games</a></li>
+        <li><a href="/projects.html">Projects</a></li>
+    </ul>
+</nav>
+
+<div class="content">
+    <h1>PythonScratcher's Site</h1>
+
+    <p id="ipAddress">Hello!</p>
+
+    <p>
+        I am PythonScratcher, a web developer working with
+        PHP, HTML, CSS, and JavaScript.
+        I enjoy building projects in Node.js, Python, and PHP.
+    </p>
+
+    <p>
+        This website is also available via Tor —
+        <a href="http://python6mr5l2lzzanqdwlt2uuafnx445z6wl4td63xis3vwgyxlmtvad.onion">
+            click here
+        </a>
+    </p>
+
+    <br>
+
+    <div class="badges">
+        <a href="//psr.tf"><img src="/psr.gif" alt=""></a>
+        <a href="https://mail.fzorb.xyz"><img src="https://i.ibb.co/4wNs0pFs/image.png" alt=""></a>
+        <img src="https://i.ibb.co/qsnbW9w/Nestscape-Now2-0-Enhanced-Badge.gif" alt="">
+        <a href="https://ipfs.tech"><img src="https://yesterhost.neocities.org/archive/buttons/button312.gif" alt=""></a>
+        <a href="//ubuntu.com"><img src="https://yesterhost.neocities.org/archive/buttons/button316.png" alt=""></a>
+        <a href="https://www.mozilla.org/firefox/"><img src="https://yesterhost.neocities.org/archive/buttons/button102.gif" alt=""></a>
+        <img src="https://seirdy.one/p/b/ipv6.2718186276.png" alt="">
+        <a href="//torproject.org"><img src="https://seirdy.one/p/b/tor.3870205793.png" alt=""></a>
+        <a href="//archive.org"><img src="https://seirdy.one/p/b/internetarchive.2540748731.png" alt=""></a>
+        <a href="https://aim.k.vu"><img src="https://i.ibb.co/N9TnLjh/aimlink.gif" alt=""></a>
+        <a href="//microsoft.com"><img src="https://anlucas.neocities.org/ms.gif" alt=""></a>
+        <a href="//neocities.org"><img src="https://i.ibb.co/QnVLzV1/neocities-now.gif" alt=""></a>
+        <a href="//map.org.uk"><img src="https://i.ibb.co/zxz7KpK/bufreepalestine.gif" alt=""></a>
     </div>
+
+    <br>
+
+    <div class="flagcounter">
+        <a href="https://info.flagcounter.com/wVSr">
+            <img src="https://s01.flagcounter.com/map/wVSr/size_s/txt_000000/border_CCCCCC/pageviews_0/viewers_0/flags_0/"
+                 alt="Flag Counter">
+        </a>
+    </div>
+
+    <p>
+        Email:
+        <a href="mailto:me@psr.tf">me@psr.tf</a>
+        — please allow 3–60 working days for a response
+    </p>
+</div>
+
+<script>
+fetch('https://ipv4.icanhazip.com')
+  .then(r => r.text())
+  .then(ip => {
+    document.getElementById('ipAddress').textContent =
+        "Hello, " + ip.trim() + "!";
+  });
+</script>
+
 </body>
 </html>
