@@ -1,67 +1,165 @@
 <!DOCTYPE html>
-<html lang="nl">
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Site van PythonScratcher</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            display: flex;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PythonScratcher's Site</title>
 
-        .sidebar {
-            width: 250px;
-            background-color: blue;
-            color: white;
-            padding: 15px 15px 15px; 
-            position: fixed;
-            top: 0;
-            left: 0;
-            height: 100%;
-            box-sizing: border-box;
-        }
+<style>
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    background: #ffffff;
+}
 
-        .content {
-            margin-left: 250px; /* Sidebar breedte */
-            padding: 20px;
-            flex-grow: 1;
-            box-sizing: border-box;
-        }
-    </style>
+/* ===== HEADER ===== */
+header {
+    background: blue;
+    color: white;
+    padding: 10px;
+}
+
+header b {
+    font-size: 18px;
+}
+
+/* ===== NAV ===== */
+nav {
+    background: #0033cc;
+}
+
+nav ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+nav li {
+    padding: 10px;
+}
+
+nav a {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+/* ===== CONTENT ===== */
+.content {
+    padding: 15px;
+    max-width: 900px;
+}
+
+/* ===== MOBILE ===== */
+@media (max-width: 700px) {
+    nav ul {
+        flex-direction: column;
+    }
+
+    nav li {
+        border-top: 1px solid rgba(255,255,255,0.3);
+    }
+
+    .content {
+        padding: 12px;
+    }
+}
+</style>
 </head>
+
 <body>
-    <div class="sidebar">
 
-        <ul>
-            <li><a href="/" style="color: white;">Home</a></li>
-            <li><a href="/files.html" style="color: white;">Bestanden</a></li>
-            <li><a href="/games" style="color: white;">Spellen</a></li>
-            <li><b><a href="/projects.html" style="color: white;">Projecten</a></b></li>
-        </ul>
-    </div>
-    <div class="content">
-        <h1>Projecten</h1>
+<header>
+    <b>PythonScratcher's Site</b>
+</header>
 
-      <ul>
-           <li><a href="//img.psr.tf">Afbeeldinghost</a> - gratis afbeeldinghost geschreven in PHP</li>
-           <li><a href="//mcpi.cc">MCPI.CC</a> - gratis URL-verkorter [Geannuleerd]</li>
-           <li><a href="//psr.tf/link.php">psr.tf</a> - mijn korte URL en gratis URL-verkorter</li>
-           <li><a href="http://chat.pythonscratcher.net">Chat</a> - webchatservice geschreven in PHP</li>
-           <li><a href="//ip.psr.tf">Krijg IP</a> - een manier om het IP van de client te krijgen via curl, GET, POST, enz. Geschreven in Node.js</li>
-           <li><a href="//whois.psr.tf">WHOIS Client</a> - PHP WHOIS-client om domeinen te zoeken</li>
-           <li><a href="http://159.65.47.53:55522/">ShrekBucks</a> - gecentraliseerde cryptocurrency [Geannuleerd]</li>
-           <li><a href="https://github.com/SigmaNetWeb">Sigmanet</a> - alternatief voor het HTTP-protocol en domeinen</li>
-           <li><a href="http://ntp.zsh.jp">OpenNTP</a> - snelle laag 2 NTP-server</li>
-           <li><a href="https://verify.pythonscratcher.net/">E-mailverificatie</a> - codeverzender geschreven in PHP met PHPMailer</li>
-           <li><a href="https://tmp.psr.tf/">/tmp</a> - tijdelijke bestandsopslag [Geannuleerd]</li>
-           <li><a href="https://glide.pythonscratcher.net">GlideBin</a> - bestandsopslag</li>
-           <li><a href="https://paste.psr.tf">PrivateBin</a> - nog een privatebin/pastebin instance</li>
-           <li><a href="http://132.145.78.123/aim/">PSRaim</a> - eigen AOL IM-server</li>
-      </ul>
+<nav>
+    <ul>
+        <li><a href="/">Home</a></li>
+        <li><a href="/files.html">Files</a></li>
+        <li><a href="/games">Games</a></li>
+        <li><b><a href="/projects.html">Projects</a></b></li>
+    </ul>
+</nav>
 
-    </div>
+<div class="content">
+    <h1>Projects</h1>
+
+    <ul>
+        <li>
+            <a href="//img.psr.tf">Image Host</a>
+            - free image hosting service written in PHP
+        </li>
+
+        <li>
+            <a href="//mcpi.cc">MCPI.CC</a>
+            - free URL shortener [Discontinued]
+        </li>
+
+        <li>
+            <a href="//psr.tf/link.php">psr.tf</a>
+            - my short URL domain and free URL shortener
+        </li>
+
+        <li>
+            <a href="http://chat.pythonscratcher.net">Chat</a>
+            - web chat service written in PHP
+        </li>
+
+        <li>
+            <a href="//ip.psr.tf">Get IP</a>
+            - obtain the client IP via curl, GET, POST, etc. Written in Node.js
+        </li>
+
+        <li>
+            <a href="//whois.psr.tf">WHOIS Client</a>
+            - PHP WHOIS client for domain lookups
+        </li>
+
+        <li>
+            <a href="http://159.65.47.53:55522/">ShrekBucks</a>
+            - centralized cryptocurrency [Discontinued]
+        </li>
+
+        <li>
+            <a href="https://github.com/SigmaNetWeb">SigmaNet</a>
+            - alternative protocol to HTTP and traditional domains
+        </li>
+
+        <li>
+            <a href="http://ntp.zsh.jp">OpenNTP</a>
+            - fast layer-2 NTP server
+        </li>
+
+        <li>
+            <a href="https://verify.pythonscratcher.net/">Email Verification</a>
+            - code sender written in PHP using PHPMailer
+        </li>
+
+        <li>
+            <a href="https://tmp.psr.tf/">/tmp</a>
+            - temporary file storage [Discontinued]
+        </li>
+
+        <li>
+            <a href="https://glide.pythonscratcher.net">GlideBin</a>
+            - file hosting service
+        </li>
+
+        <li>
+            <a href="https://paste.psr.tf">PrivateBin</a>
+            - another PrivateBin / pastebin instance
+        </li>
+
+        <li>
+            <a href="http://132.145.78.123/aim/">PSRaim</a>
+            - custom AOL Instant Messenger server
+        </li>
+        
+    </ul>
+</div>
+
 </body>
 </html>
