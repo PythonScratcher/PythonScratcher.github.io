@@ -152,8 +152,33 @@ nav a {
         <a href="mailto:me@psr.tf">me@psr.tf</a>
         — please allow 3–60 working days for a response
     </p>
-</div>
 
+<h2>this sends a live notification to my phone:</h2>
+
+<input type="text" id="message" placeholder="Type something..." />
+<button onclick="sendMessage()">Send</button>
+    
+</div>
+<script>
+function sendMessage() {
+  const msg = document.getElementById("message").value;
+
+  if (!msg.trim()) return;
+
+  fetch("https://ntfy.sh/pythonscratcherssupercoolwebsite4234", {
+    method: "POST",
+    body: msg,
+    headers: {
+      "Title": "Website Message",
+      "Priority": "4",
+      "Tags": "speech_balloon"
+    }
+  }).then(() => {
+    alert("Sent 🔥");
+    document.getElementById("message").value = "";
+  });
+}
+</script>
 <script>
 fetch('https://ipv4.icanhazip.com')
   .then(r => r.text())
