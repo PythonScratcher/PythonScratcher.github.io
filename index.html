@@ -169,12 +169,12 @@ function sendMessage() {
     method: "POST",
     body: msg,
     headers: {
-      "Title": "Website Message",
+      "Title": "website msg",
       "Priority": "4",
       "Tags": "speech_balloon"
     }
   }).then(() => {
-    alert("Sent 🔥");
+    alert("Sent");
     document.getElementById("message").value = "";
   });
 }
