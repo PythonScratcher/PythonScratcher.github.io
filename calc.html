@@ -1,0 +1,145 @@
+<div id="calc"></div>
+
+<script>
+(function () {
+  const root = document.getElementById("calc");
+  if (!root) return;
+
+  //  styles
+  const style = document.createElement("style");
+  style.textContent = `
+    body {
+      margin: 0;
+      background: #0f0f1a;
+      font-family: system-ui, sans-serif;
+    }
+
+    .calc {
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      color: #fff;
+    }
+
+    .display {
+      flex: 1;
+      display: flex;
+      align-items: flex-end;
+      justify-content: flex-end;
+      padding: 24px;
+      font-size: 3rem;
+      background: #111;
+      word-break: break-all;
+    }
+
+    .keys {
+      flex: 2;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 8px;
+      padding: 8px;
+    }
+
+    button {
+      font-size: 1.4rem;
+      border: none;
+      border-radius: 12px;
+      background: #1e1e2f;
+      color: #fff;
+      cursor: pointer;
+    }
+
+    button:active {
+      transform: scale(0.97);
+    }
+
+    .op { background: #ff8c42; }
+    .eq { background: #4caf50; grid-column: span 2; }
+    .clr { background: #e53935; }
+  `;
+  document.head.appendChild(style);
+
+  root.innerHTML = `
+    <div class="calc">
+      <div class="display">0</div>
+      <div class="keys">
+        <button class="clr">C</button>
+        <button>(</button>
+        <button>)</button>
+        <button class="op">/</button>
+
+        <button>7</button>
+        <button>8</button>
+        <button>9</button>
+        <button class="op">*</button>
+
+        <button>4</button>
+        <button>5</button>
+        <button>6</button>
+        <button class="op">-</button>
+
+        <button>1</button>
+        <button>2</button>
+        <button>3</button>
+        <button class="op">+</button>
+
+        <button>0</button>
+        <button>.</button>
+        <button class="eq">=</button>
+      </div>
+    </div>
+  `;
+
+  const display = root.querySelector(".display");
+  let value = "";
+
+  function render() {
+    display.textContent = value || "0";
+  }
+
+  function run() {
+    try {
+      value = Function("return " + value)().toString();
+    } catch {
+      value = "Error";
+    }
+  }
+
+  function press(x) {
+    if (x === "C") {
+      value = "";
+    } else if (x === "=") {
+      run();
+    } else {
+      if (value === "Error") value = "";
+      value += x;
+    }
+    render();
+  }
+
+  // mouse
+  root.addEventListener("click", e => {
+    if (e.target.tagName !== "BUTTON") return;
+    press(e.target.textContent);
+  });
+
+  // keyboard
+  document.addEventListener("keydown", e => {
+    const k = e.key;
+
+    if (!isNaN(k) || "+-*/().".includes(k)) {
+      press(k);
+    } else if (k === "Enter") {
+      e.preventDefault();
+      press("=");
+    } else if (k === "Backspace") {
+      value = value.slice(0, -1);
+      render();
+    } else if (k === "Escape") {
+      press("C");
+    }
+  });
+
+  render();
+})();
+</script>
