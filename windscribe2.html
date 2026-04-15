@@ -3,78 +3,87 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Windscribe Live Map</title>
+<title>Windscribe Map</title>
 
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
 
 <style>
 body, html {
     margin: 0;
-    padding: 0;
     height: 100%;
-    width: 100%;
-    overflow: hidden;
     background: #0f172a;
+    font-family: sans-serif;
 }
 
 #map {
     height: 100vh;
-    width: 100vw;
 }
 
+/* controls */
+.controls {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    background: #1e293b;
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid #334155;
+    z-index: 1000;
+    color: #e2e8f0;
+    font-size: 12px;
+}
+
+.controls label {
+    display: block;
+    margin-top: 6px;
+}
+
+/* popup */
 .leaflet-popup-content-wrapper {
     background: #1e293b;
     color: #f1f5f9;
-    border-radius: 8px;
-    border: 1px solid #334155;
-}
-
-.leaflet-popup-tip {
-    background: #1e293b;
-}
-
-.city-title {
-    font-family: sans-serif;
-    font-size: 14px;
-    font-weight: bold;
-    color: #38bdf8;
-    border-bottom: 1px solid #334155;
-    margin-bottom: 5px;
-    padding-bottom: 2px;
-}
-
-.country-label {
-    font-family: sans-serif;
-    font-size: 10px;
-    text-transform: uppercase;
-    color: #94a3b8;
-    margin-bottom: 8px;
 }
 
 .server-pill {
     background: #334155;
-    padding: 2px 8px;
-    border-radius: 10px;
-    font-size: 11px;
-    display: inline-block;
+    padding: 2px 6px;
     margin: 2px;
-    border: 1px solid #475569;
-    font-family: sans-serif;
-    cursor: pointer;
-}
-
-.server-pill.active {
-    background: #0ea5e9;
-    border-color: #38bdf8;
-}
-
-.server-info {
-    margin-top: 6px;
+    border-radius: 6px;
+    display: inline-block;
 }
 </style>
 </head>
 
 <body>
+
+<div class="controls">
+    <label>
+        Type:
+        <select id="typeFilter">
+            <option value="all">All</option>
+            <option value="free">Free only</option>
+            <option value="premium">Premium only</option>
+        </select>
+    </label>
+
+    <label>
+        P2P only:
+        <input type="checkbox" id="p2pFilter">
+    </label>
+
+    <label>
+        Max Usage (%):
+        <input type="range" id="usageFilter" min="0" max="100" value="100">
+        <span id="usageVal">100</span>
+    </label>
+
+    <label>
+        Min Speed (Gbps):
+        <input type="range" id="speedFilter" min="0" max="10" value="0" step="0.5">
+        <span id="speedVal">0</span>
+    </label>
+</div>
+
 <div id="map"></div>
 
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
@@ -82,16 +91,11 @@ body, html {
 <script>
 
 // ---------------- MAP ----------------
+const map = L.map('map').setView([20,0],3);
 
-const map = L.map('map', { zoomControl: false }).setView([20, 0], 3);
-L.control.zoom({ position: 'bottomright' }).addTo(map);
-
-L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
-    attribution: '&copy; CARTO'
-}).addTo(map);
+L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png').addTo(map);
 
 // ---------------- CITY COORDS ----------------
-
 const cityCoords = {
             "Atlanta": [33.749, -84.388], "Denver": [39.739, -104.990], "Kansas City": [39.099, -94.578], "Houston": [29.760, -95.369], "Dallas": [32.776, -96.797],
             "Tampa": [27.950, -82.457], "Chicago": [41.878, -87.629], "Buffalo": [42.886, -78.878], "Orlando": [28.538, -81.379], "Boston": [42.360, -71.058],
@@ -117,119 +121,150 @@ const cityCoords = {
             "Asuncion": [-25.263, -57.575], "Lima": [-12.046, -77.042], "Montevideo": [-34.901, -56.164], "Nuuk York": [64.183, -51.721]
         };
 
+
 // ---------------- HELPERS ----------------
+function norm(s){ return (s||"").toLowerCase().trim(); }
+function makeKey(c,n){ return (c+" - "+n).toLowerCase(); }
 
-function norm(str) {
-    return (str || "").toLowerCase().trim();
+// usage → color (dark = high usage)
+function usageToColor(u){
+    const val = Math.max(0, Math.min(100, u));
+    const light = 70 - (val * 0.4);
+    return `hsl(200, 80%, ${light}%)`;
 }
 
-function makeKey(city, nickname) {
-    return (city + " - " + nickname).toLowerCase().trim();
-}
+// ---------------- STATE ----------------
+let allMarkers = [];
 
-// ---------------- LOAD DATA ----------------
-
+// ---------------- LOAD ----------------
 Promise.all([
-    fetch('windscribe_locations.json').then(r => r.json()),
-    fetch('https://psr.net.sh/windscribe.php').then(r => r.json())
-])
-.then(([geo, stats]) => {
+    fetch('windscribe_locations.json').then(r=>r.json()),
+    fetch('https://psr.net.sh/windscribe.php').then(r=>r.json())
+]).then(([geo, stats]) => {
 
     const statsIndex = {};
 
     for (const loc of Object.values(stats.data.locations)) {
         for (const pop of loc.pops || []) {
             statsIndex[norm(pop.name)] = {
-                usage: parseFloat(pop.usage || 0),
-                speed: parseFloat(pop.link_speed || 0),
-                p2p: pop.is_p2p,
-                premium: pop.is_premium
+                usage: parseFloat(pop.usage||0),
+                speed: parseFloat(pop.link_speed||0),
+                p2p: pop.is_p2p === 1,
+                premium: pop.is_premium === 1,
+                status: pop.status
             };
         }
     }
 
     geo.locations.forEach(loc => {
 
-        const cityGroups = {};
-
-        (loc.cities || []).forEach(c => {
-            if (!cityGroups[c.name]) cityGroups[c.name] = [];
-            cityGroups[c.name].push(c.nickname);
+        const groups = {};
+        loc.cities.forEach(c=>{
+            if(!groups[c.name]) groups[c.name]=[];
+            groups[c.name].push(c.nickname);
         });
 
-        for (const [city, nicknames] of Object.entries(cityGroups)) {
+        for(const [city,nicks] of Object.entries(groups)){
 
-            const latLng = cityCoords[city];
-            if (!latLng) continue;
+            const coords = cityCoords[city];
+            if(!coords) continue;
 
-            const marker = L.circleMarker(latLng, {
-                radius: 6,
-                fillColor: "#0ea5e9",
-                color: "#fff",
-                weight: 1,
-                fillOpacity: 0.8
-            }).addTo(map);
-
-            // build per-server stats
-            const servers = nicknames.map(nick => {
-                const key = makeKey(city, nick);
-                const stat = statsIndex[key] || {};
-
+            const servers = nicks.map(n=>{
+                const s = statsIndex[makeKey(city,n)] || {};
                 return {
-                    name: nick,
-                    usage: stat.usage || 0,
-                    speed: stat.speed || 0,
-                    p2p: stat.p2p === 1,
-                    premium: stat.premium === 1
+                    name:n,
+                    usage:s.usage||0,
+                    speed:(s.speed||0)/1000,
+                    p2p:s.p2p||false,
+                    premium:s.premium||false,
+                    status:s.status ?? 1
                 };
             });
 
-            // unique id per popup
-            const popupId = "popup_" + Math.random().toString(36).substring(2, 9);
+            // aggregate
+            const avgUsage = servers.reduce((a,b)=>a+b.usage,0)/servers.length;
+            const hasFree = servers.some(s=>!s.premium);
+            const hasP2P = servers.some(s=>s.p2p);
+            const maxSpeed = Math.max(...servers.map(s=>s.speed));
+            const hasDown = servers.some(s=>s.status===0);
 
-            const tabs = servers.map((s, i) => `
-                <span class="server-pill ${i===0?'active':''}" 
-                    onclick="switchTab('${popupId}', ${i})">
-                    ${s.name}
-                </span>
-            `).join('');
+            const marker = L.circleMarker(coords, {
+                radius:6,
+                fillColor: hasDown ? "#ef4444" : usageToColor(avgUsage),
+                color: hasFree ? "#22c55e" : "#ffffff",
+                weight:2,
+                fillOpacity:0.9
+            });
 
-            const contentBlocks = servers.map((s, i) => `
-                <div class="server-info" id="${popupId}_${i}" style="display:${i===0?'block':'none'}">
-                    <span class="server-pill">${(s.speed/1000).toFixed(2)} Gbps</span>
-                    <span class="server-pill">${s.p2p ? "P2P" : "No P2P"}</span>
-                    <span class="server-pill">${s.premium ? "Premium" : "Free"}</span>
-                    <span class="server-pill">${s.usage.toFixed(2)}% load</span>
-                </div>
-            `).join('');
+            marker.meta = {
+                hasFree, hasP2P, avgUsage, maxSpeed
+            };
 
             marker.bindPopup(`
-                <div class="city-title">${city}</div>
-                <div class="country-label">${loc.country}</div>
-                <div>${tabs}</div>
-                ${contentBlocks}
+                <b>${city}</b><br>
+                ${servers.map(s=>`
+                    <div class="server-pill">
+                        ${s.name} |
+                        ${s.speed.toFixed(2)} Gbps |
+                        ${s.usage.toFixed(1)}% |
+                        ${s.p2p ? "P2P" : "No P2P"} |
+                        ${s.premium ? "Premium" : "Free"}
+                    </div>
+                `).join('')}
             `);
+
+            marker.addTo(map);
+            allMarkers.push(marker);
         }
     });
 
+    applyFilters();
 });
 
-// ---------------- TAB SWITCH ----------------
+// ---------------- FILTERS ----------------
 
-function switchTab(id, index) {
-    const parent = document.querySelector(`[id^="${id}_"]`).parentElement;
+function applyFilters(){
 
-    parent.querySelectorAll('.server-info').forEach((el, i) => {
-        el.style.display = (i === index) ? 'block' : 'none';
-    });
+    const type = document.getElementById('typeFilter').value;
+    const p2p = document.getElementById('p2pFilter').checked;
+    const maxUsage = +document.getElementById('usageFilter').value;
+    const minSpeed = +document.getElementById('speedFilter').value;
 
-    parent.querySelectorAll('.server-pill').forEach((el, i) => {
-        if (i < parent.querySelectorAll('.server-info').length) {
-            el.classList.toggle('active', i === index);
+    allMarkers.forEach(m=>{
+        const meta = m.meta;
+
+        let show = true;
+
+        if(type==="free" && !meta.hasFree) show=false;
+        if(type==="premium" && meta.hasFree) show=false;
+        if(p2p && !meta.hasP2P) show=false;
+        if(meta.avgUsage > maxUsage) show=false;
+        if(meta.maxSpeed < minSpeed) show=false;
+
+        if(show){
+            m.addTo(map);
+        } else {
+            map.removeLayer(m);
         }
     });
 }
 
+// ---------------- UI ----------------
+
+document.getElementById('typeFilter').onchange = applyFilters;
+document.getElementById('p2pFilter').onchange = applyFilters;
+
+document.getElementById('usageFilter').oninput = e=>{
+    document.getElementById('usageVal').textContent = e.target.value;
+    applyFilters();
+};
+
+document.getElementById('speedFilter').oninput = e=>{
+    document.getElementById('speedVal').textContent = e.target.value;
+    applyFilters();
+};
+
 </script>
+
 </body>
 </html>
