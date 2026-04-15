@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Windscribe VPN World Map</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <style>
+        body { font-family: 'Segoe UI', Arial, sans-serif; margin: 0; padding: 20px; background: #0f172a; color: #f1f5f9; }
+        #map { height: 700px; width: 100%; border-radius: 16px; border: 1px solid #334155; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5); }
+        .header { text-align: center; margin-bottom: 25px; }
+        .header h1 { color: #38bdf8; margin-bottom: 5px; }
+        .leaflet-popup-content-wrapper { background: #1e293b; color: #f1f5f9; border: 1px solid #334155; }
+        .leaflet-popup-tip { background: #1e293b; }
+        .city-title { font-size: 16px; font-weight: 700; color: #38bdf8; border-bottom: 1px solid #334155; padding-bottom: 4px; margin-bottom: 8px; }
+        .country-label { font-size: 11px; text-transform: uppercase; letter-spacing: 0.05em; color: #94a3b8; margin-bottom: 10px; }
+        .server-pill { background: #334155; padding: 2px 10px; border-radius: 20px; font-size: 12px; display: inline-block; margin: 2px; border: 1px solid #475569; }
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <h1>Windscribe Global Network</h1>
+        <p id="status">Syncing with windscribe_locations.json...</p>
+    </div>
+
+    <div id="map"></div>
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script>
+        // Extensive coordinate lookup for Windscribe cities
+        const cityCoords = {
+            "Atlanta": [33.749, -84.388], "Denver": [39.739, -104.990], "Kansas City": [39.099, -94.578], "Houston": [29.760, -95.369], "Dallas": [32.776, -96.797],
+            "Tampa": [27.950, -82.457], "Chicago": [41.878, -87.629], "Buffalo": [42.886, -78.878], "Orlando": [28.538, -81.379], "Boston": [42.360, -71.058],
+            "Cleveland": [41.499, -81.694], "New York": [40.712, -74.006], "New Jersey": [40.058, -74.405], "Miami": [25.761, -80.191], "Washington DC": [38.907, -77.036],
+            "Charlotte": [35.227, -80.843], "Detroit": [42.331, -83.045], "Ashburn": [39.043, -77.487], "Philadelphia": [39.952, -75.165], "South Bend": [41.676, -86.251],
+            "Raleigh": [35.779, -78.638], "Los Angeles": [34.052, -118.243], "San Francisco": [37.774, -122.419], "Seattle": [47.606, -122.332], "Salt Lake City": [40.760, -111.891],
+            "Bend": [44.058, -121.315], "Honolulu": [21.306, -157.858], "San Jose": [37.338, -121.886], "Phoenix": [33.448, -112.074], "Las Vegas": [36.171, -115.139], "Santa Clara": [37.354, -121.955],
+            "Toronto": [43.653, -79.383], "Montreal": [45.501, -73.567], "Halifax": [44.648, -63.575], "Vancouver": [49.282, -123.120], "Calgary": [51.044, -114.071], "Winnipeg": [49.895, -97.138],
+            "Vienna": [48.208, 16.373], "Brussels": [50.850, 4.351], "Sofia": [42.697, 23.321], "Zagreb": [45.815, 15.981], "Prague": [50.075, 14.437], "Copenhagen": [55.676, 12.568],
+            "Tallinn": [59.437, 24.753], "Helsinki": [60.169, 24.938], "Paris": [48.856, 2.352], "Marseille": [43.296, 5.369], "Frankfurt": [50.110, 8.682], "Berlin": [52.520, 13.404],
+            "Athens": [37.983, 23.727], "Budapest": [47.497, 19.040], "Reykjavik": [64.146, -21.942], "Dublin": [53.349, -6.260], "Milan": [45.464, 9.189], "Amsterdam": [52.367, 4.904],
+            "Oslo": [59.913, 10.752], "Warsaw": [52.229, 21.011], "Madrid": [40.416, -3.703], "Stockholm": [59.329, 18.068], "Zurich": [47.376, 8.541], "London": [51.507, -0.127],
+            "Manchester": [53.480, -2.242], "Istanbul": [41.008, 28.978], "Kyiv": [50.450, 30.523], "Dubai": [25.204, 55.270], "Tokyo": [35.676, 139.650], "Seoul": [37.566, 126.978],
+            "Singapore": [1.352, 103.819], "Sydney": [-33.868, 151.209], "Melbourne": [-37.813, 144.963], "Auckland": [-36.848, 174.763], "Bangkok": [13.756, 100.501],
+            "Buenos Aires": [-34.603, -58.381], "Sao Paulo": [-23.550, -46.633], "Santiago": [-33.448, -70.667], "Bogota": [4.711, -74.072], "Lima": [-12.046, -77.042], "Montevideo": [-34.901, -56.164],
+            "Nuuk York": [64.183, -51.721], "Mumbai": [19.076, 72.877], "Queretaro": [20.588, -100.389], "Panama City": [8.982, -79.519], "Asuncion": [-25.263, -57.575]
+        };
+
+        const map = L.map('map').setView([20, 0], 2);
+
+        // Professional Dark Map Style
+        L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
+            attribution: '&copy; OpenStreetMap &copy; CARTO'
+        }).addTo(map);
+
+        // Fetch the updated filename
+        fetch('https://files.catbox.moe/windscribe_locations.json')
+            .then(res => res.json())
+            .then(data => {
+                data.locations.forEach(loc => {
+                    const cityGroups = {};
+                    
+                    loc.cities.forEach(c => {
+                        if (!cityGroups[c.name]) cityGroups[c.name] = [];
+                        cityGroups[c.name].push(c.nickname);
+                    });
+
+                    for (const [name, nicknames] of Object.entries(cityGroups)) {
+                        const latLng = cityCoords[name];
+                        if (latLng) {
+                            const marker = L.circleMarker(latLng, {
+                                radius: 6,
+                                fillColor: "#0ea5e9",
+                                color: "#fff",
+                                weight: 1,
+                                fillOpacity: 0.8
+                            }).addTo(map);
+
+                            const pills = nicknames.map(n => `<span class="server-pill">${n}</span>`).join('');
+                            marker.bindPopup(`
+                                <div class="city-title">${name}</div>
+                                <div class="country-label">${loc.country}</div>
+                                <div>${pills}</div>
+                            `);
+                        }
+                    }
+                });
+                document.getElementById('status').innerText = "Live: Click a dot to explore servers";
+            })
+            .catch(err => {
+                document.getElementById('status').innerText = "Error loading locations.json. (Check CORS settings)";
+                console.error(err);
+            });
+    </script>
+</body>
+</html>
