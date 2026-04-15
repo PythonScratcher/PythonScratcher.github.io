@@ -1,30 +1,26 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Windscribe VPN World Map</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Windscribe Map</title>
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <style>
-        body { font-family: 'Segoe UI', Arial, sans-serif; margin: 0; padding: 20px; background: #0f172a; color: #f1f5f9; }
-        #map { height: 750px; width: 100%; border-radius: 16px; border: 1px solid #334155; }
-        .header { text-align: center; margin-bottom: 20px; }
-        .header h1 { color: #38bdf8; margin: 0; }
-        .leaflet-popup-content-wrapper { background: #1e293b; color: #f1f5f9; border: 1px solid #334155; }
-        .city-title { font-size: 16px; font-weight: bold; color: #38bdf8; border-bottom: 1px solid #444; margin-bottom: 8px; }
-        .server-pill { background: #334155; padding: 2px 8px; border-radius: 12px; font-size: 11px; display: inline-block; margin: 2px; border: 1px solid #475569; }
+        body, html { margin: 0; padding: 0; height: 100%; width: 100%; overflow: hidden; background: #0f172a; }
+        #map { height: 100vh; width: 100vw; }
+        .leaflet-popup-content-wrapper { background: #1e293b; color: #f1f5f9; border-radius: 8px; border: 1px solid #334155; }
+        .leaflet-popup-tip { background: #1e293b; }
+        .city-title { font-family: sans-serif; font-size: 14px; font-weight: bold; color: #38bdf8; border-bottom: 1px solid #334155; margin-bottom: 5px; padding-bottom: 2px; }
+        .country-label { font-family: sans-serif; font-size: 10px; text-transform: uppercase; color: #94a3b8; margin-bottom: 8px; }
+        .server-pill { background: #334155; padding: 2px 8px; border-radius: 10px; font-size: 11px; display: inline-block; margin: 1px; border: 1px solid #475569; font-family: sans-serif; }
     </style>
 </head>
 <body>
-
-    <div class="header">
-        <h1>Windscribe Global Network</h1>
-        <p id="status">Loading windscribe_locations.json...</p>
-    </div>
 
     <div id="map"></div>
 
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <script>
-        // Full coordinate dictionary for all cities in your JSON
         const cityCoords = {
             "Atlanta": [33.749, -84.388], "Denver": [39.739, -104.990], "Kansas City": [39.099, -94.578], "Houston": [29.760, -95.369], "Dallas": [32.776, -96.797],
             "Tampa": [27.950, -82.457], "Chicago": [41.878, -87.629], "Buffalo": [42.886, -78.878], "Orlando": [28.538, -81.379], "Boston": [42.360, -71.058],
@@ -50,13 +46,13 @@
             "Asuncion": [-25.263, -57.575], "Lima": [-12.046, -77.042], "Montevideo": [-34.901, -56.164], "Nuuk York": [64.183, -51.721]
         };
 
-        const map = L.map('map').setView([20, 0], 2);
+        const map = L.map('map', { zoomControl: false }).setView([20, 0], 3);
+        L.control.zoom({ position: 'bottomright' }).addTo(map);
 
         L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
             attribution: '&copy; CARTO'
         }).addTo(map);
 
-        // Fetching the renamed file from the same webserver
         fetch('windscribe_locations.json')
             .then(res => res.json())
             .then(data => {
@@ -81,16 +77,12 @@
                             const pills = nicknames.map(n => `<span class="server-pill">${n}</span>`).join('');
                             marker.bindPopup(`
                                 <div class="city-title">${name}</div>
-                                <div style="color:#94a3b8; font-size:11px; margin-bottom:5px;">${loc.country}</div>
+                                <div class="country-label">${loc.country}</div>
                                 <div>${pills}</div>
                             `);
                         }
                     }
                 });
-                document.getElementById('status').innerText = "All " + data.locations.length + " country regions loaded.";
-            })
-            .catch(err => {
-                document.getElementById('status').innerText = "Error: Could not find 'windscribe_locations.json' on this server.";
             });
     </script>
 </body>
