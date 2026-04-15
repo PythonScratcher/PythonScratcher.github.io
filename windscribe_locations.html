@@ -53,7 +53,7 @@
         }).addTo(map);
 
         // Fetch the updated filename
-        fetch('https://files.catbox.moe/windscribe_locations.json')
+        fetch('/windscribe_locations.json')
             .then(res => res.json())
             .then(data => {
                 data.locations.forEach(loc => {
