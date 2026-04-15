@@ -19,7 +19,7 @@ body, html {
     height: 100vh;
 }
 
-/* controls */
+/* control pannel */
 .controls {
     position: absolute;
     top: 10px;
@@ -38,7 +38,7 @@ body, html {
     margin-top: 6px;
 }
 
-/* popup */
+    
 .leaflet-popup-content-wrapper {
     background: #1e293b;
     color: #f1f5f9;
@@ -90,12 +90,12 @@ body, html {
 
 <script>
 
-// ---------------- MAP ----------------
+// map
 const map = L.map('map').setView([20,0],3);
 
 L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png').addTo(map);
 
-// ---------------- CITY COORDS ----------------
+// ai did this bit :P
 const cityCoords = {
             "Atlanta": [33.749, -84.388], "Denver": [39.739, -104.990], "Kansas City": [39.099, -94.578], "Houston": [29.760, -95.369], "Dallas": [32.776, -96.797],
             "Tampa": [27.950, -82.457], "Chicago": [41.878, -87.629], "Buffalo": [42.886, -78.878], "Orlando": [28.538, -81.379], "Boston": [42.360, -71.058],
@@ -122,21 +122,21 @@ const cityCoords = {
         };
 
 
-// ---------------- HELPERS ----------------
+
 function norm(s){ return (s||"").toLowerCase().trim(); }
 function makeKey(c,n){ return (c+" - "+n).toLowerCase(); }
 
-// usage → color (dark = high usage)
+// usage colourings
 function usageToColor(u){
     const val = Math.max(0, Math.min(100, u));
     const light = 70 - (val * 0.4);
     return `hsl(200, 80%, ${light}%)`;
 }
 
-// ---------------- STATE ----------------
+// state
 let allMarkers = [];
 
-// ---------------- LOAD ----------------
+// load
 Promise.all([
     fetch('windscribe_locations.json').then(r=>r.json()),
     fetch('https://psr.net.sh/windscribe.php').then(r=>r.json())
@@ -221,7 +221,7 @@ Promise.all([
     applyFilters();
 });
 
-// ---------------- FILTERS ----------------
+// filters key
 
 function applyFilters(){
 
@@ -249,7 +249,7 @@ function applyFilters(){
     });
 }
 
-// ---------------- UI ----------------
+// ui
 
 document.getElementById('typeFilter').onchange = applyFilters;
 document.getElementById('p2pFilter').onchange = applyFilters;
